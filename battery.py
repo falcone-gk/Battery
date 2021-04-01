@@ -25,14 +25,39 @@ def battery_conservation(n):
     # Corre todo el comando en modo superusuario.
     os.system('su -c {}'.format(full_cmd))
 
+def battery_status():
+    """
+    Show battery settings.
+    """
+
+    file = '/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode'
+
+    with open(file, 'r') as f:
+        value = int(f.readline().strip())
+        f.close()
+    
+    return value
+
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description='Change battery conservation mode')
-    parser.add_argument('-m', '--mode', type=int)
+    parser.add_argument('-m', '--mode', type=int, help='battery conservation mode')
+    parser.add_argument('-s', '--settings', action='store_true', help='show battery settings')
+
     args = parser.parse_args()
-    mode = args.mode
-    battery_conservation(mode)
+
+    if args.mode:
+        mode = args.mode
+        battery_conservation(mode)
+
+    elif args.settings:
+        
+        value = battery_status()        
+        msg = 'Conservación de batería'
+        status = {1: 'activado.', 0: 'desactivado'}
+        print(msg, status[value])
+
 
 if __name__ == '__main__':
     main()
