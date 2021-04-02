@@ -35,7 +35,7 @@ def battery_status():
     with open(file, 'r') as f:
         value = int(f.readline().strip())
         f.close()
-    
+
     return value
 
 def main():
@@ -47,13 +47,13 @@ def main():
 
     args = parser.parse_args()
 
-    if args.mode:
+    if isinstance(args.mode, int):
         mode = args.mode
         battery_conservation(mode)
 
     elif args.settings:
-        
-        value = battery_status()        
+
+        value = battery_status()
         msg = 'Conservación de batería'
         status = {1: 'activado.', 0: 'desactivado'}
         print(msg, status[value])
