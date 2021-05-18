@@ -15,7 +15,11 @@ def is_allowed(func):
             print('Parámetro no permitido: {}'.format(param))
             return
 
-        func(*args, **kwargs)
-        print('Realizado exitosamente!')
+        status = func(*args, **kwargs)
+
+        if status == 0:
+            print('Realizado exitosamente!')
+        elif status == 256:
+            print('Inténtalo de nuevo! :(')
 
     return wrapper

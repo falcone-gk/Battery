@@ -23,7 +23,8 @@ def battery_conservation(n):
     full_cmd = mode + '>' + file
 
     # Corre todo el comando en modo superusuario.
-    os.system('su -c {}'.format(full_cmd))
+    val = os.system('su -c {}'.format(full_cmd))
+    return val
 
 def battery_status():
     """
